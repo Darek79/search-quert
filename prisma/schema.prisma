@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model amazonProducts {
+  id                                          String  @id @default(auto()) @map("_id") @db.ObjectId
+  amazon_category_and_sub_category            String
+  average_review_rating                       String
+  customer_questions_and_answers              String
+  customer_reviews                            String
+  customers_who_bought_this_item_also_bought  String
+  description                                 String
+  items_customers_buy_after_viewing_this_item String
+  manufacturer                                String
+  number_available_in_stock                   String
+  number_of_answered_questions                Int?
+  number_of_reviews                           String
+  price                                       String
+  product_description                         String
+  product_information                         String
+  product_name                                String
+  uniq_id                                     String
+  visited                                     Boolean
+}
+
+model books {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  brand            String?
+  category_1       String
+  name             String
+  primary_category String
+  url              String
+}
+
+model mixedProducts {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  brand              String
+  category           String
+  description        String
+  discountPercentage Float
+  id_                Int      @map("id")
+  images             String[]
+  price              Int
+  rating             Float
+  stock              Int
+  thumbnail          String
+  title              String
+
+  @@index([title], map: "title_1")
+}
+
+model products {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  graphic   String
+  harddrive String
+  id_       Int    @map("id")
+  os        String
+  panel     String
+  price     Int
+  processor String
+  ram       String
+  title     String
+}
