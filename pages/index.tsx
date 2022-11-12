@@ -15,19 +15,10 @@ const Home: NextPage = () => {
             </Head>
             <QueryComponent />
             <Box className="relative top-[30%]">
-                <Searchbar className="m-auto flex gap-3 p-3 items-center rounded-2xl w-full max-w-2xl border-2 text-lg group border-bgInput hover:shadow-xl hover:bg-bgInput hover:rounded-b-none" />
-                <QueryPreItemWrapper className="max-w-2xl m-auto py-3 grid gap-1 bg-bgInput rounded-b-2xl" />
+                <Searchbar />
             </Box>
         </PageWrapper>
     );
 };
 
 export default Home;
-
-// export async function getStaticProps() {
-//     const article = await client.fetch(`*[_type == "article"]`);
-//     console.log(article, 'data');
-//     return {
-//         props: { article },
-//     };
-// }

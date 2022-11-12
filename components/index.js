@@ -8,9 +8,12 @@ export { default as QueryComponent } from './atoms/QueryComponent';
 
 //MOLECULUS
 
-export { default as Searchbar } from './moleculs/Searchbar';
+export { default as SearchbarItem } from './moleculs/SearchbarItem';
 export { default as QueryPreItem } from './moleculs/QueryPreItem';
-export { default as QueryPreItemWrapper } from './moleculs/QueryPreItemWrapper';
+export { default as QueryPreItemBox } from './moleculs/QueryPreItemBox';
+
+//ORGANISM
+export { default as Searchbar } from './organism/SearchBar';
 
 //SVG
 

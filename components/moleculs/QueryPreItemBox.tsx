@@ -1,7 +1,6 @@
 import { Box, QueryPreItem } from 'components';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, memo } from 'react';
 import { useAppDispatch, AppDispatch, useAppSelector, RootState } from 'redux/rootStore';
-import { queryResults } from 'redux/slices/querySlice';
 
 const test = [
     {
@@ -66,14 +65,13 @@ const test = [
     },
 ];
 
-export default function QueryPreItemWrapper({ ...rest }: HTMLAttributes<HTMLDivElement>): JSX.Element {
+export default memo(function QueryPreItemWrapper({ ...rest }: HTMLAttributes<HTMLDivElement>): JSX.Element {
     const { queryResults } = useAppSelector((state: RootState) => state.querySlice);
     return (
         <Box {...rest}>
             <>{console.log(queryResults, '11111111111')}</>
-            {test &&
-                test.sort((a, b) => Number(b.visited) - Number(a.visited)) &&
-                test.map(el => (
+            {queryResults &&
+                queryResults.map(el => (
                     <QueryPreItem
                         key={el.id}
                         id={el.id}
@@ -84,4 +82,4 @@ export default function QueryPreItemWrapper({ ...rest }: HTMLAttributes<HTMLDivE
                 ))}
         </Box>
     );
-}
+});

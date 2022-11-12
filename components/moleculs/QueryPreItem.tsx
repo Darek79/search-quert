@@ -2,10 +2,10 @@ import { Box, ClockSVG, LupeSVG } from 'components';
 import Link from 'next/link';
 import classname from 'classnames';
 import type { PRODUCT } from 'Types/product';
-import { HTMLAttributes, useMemo } from 'react';
+import { HTMLAttributes, useMemo, memo } from 'react';
 type QueryPreItems = PRODUCT & HTMLAttributes<HTMLDivElement>;
 
-export default function QueryPreItem({ product_name, manufacturer, id, visited }: QueryPreItems): JSX.Element {
+export default memo(function QueryPreItem({ product_name, manufacturer, id, visited }: QueryPreItems): JSX.Element {
     const iconClasses = useMemo(
         () =>
             classname({
@@ -43,7 +43,7 @@ export default function QueryPreItem({ product_name, manufacturer, id, visited }
                 }}
             >
                 <a>
-                    <Box className="flex">
+                    <Box className="flex gap-3">
                         <Box className="w-6 h-6 flex items-center">
                             <ClockSVG className={iconClasses} />
                             <LupeSVG className={lupeClasses} />
@@ -55,4 +55,4 @@ export default function QueryPreItem({ product_name, manufacturer, id, visited }
             <p className={deleteClasses}>Delete</p>
         </Box>
     );
-}
+});

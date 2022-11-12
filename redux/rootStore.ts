@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import inputSlice from 'redux/slices/inputSlice';
 import querySlice from 'redux/slices/querySlice';
+import showBox from './slices/showBox';
 const store = configureStore({
     reducer: {
         inputSlice,
         querySlice,
+        showBox,
     },
 });
 

@@ -2,12 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { PRODUCT } from 'Types/product';
 
 interface InitStateI {
-    clickedInput: boolean;
     queryResults: PRODUCT[];
 }
 
 const initState: InitStateI = {
-    clickedInput: false,
     queryResults: [],
 };
 
@@ -15,14 +13,15 @@ const querySlice = createSlice({
     name: 'querySlice',
     initialState: initState,
     reducers: {
-        inputClick(state) {
-            state.clickedInput = !state.clickedInput;
-        },
-        queryResults(state, action: PayloadAction<PRODUCT[]>) {
+        querySetter(state, action: PayloadAction<PRODUCT[]>) {
+            console.log(action.payload, 'payload');
             state.queryResults = action.payload;
+        },
+        resetQuery(state) {
+            state.queryResults = [];
         },
     },
 });
 
-export const { inputClick, queryResults } = querySlice.actions;
+export const { querySetter, resetQuery } = querySlice.actions;
 export default querySlice.reducer;
