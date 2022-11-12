@@ -2,6 +2,7 @@
 
 export { default as Box } from './atoms/Box';
 export { default as PageWrapper } from './atoms/PageWrapper';
+export { default as PageInnerWrapper } from './atoms/PageInnerWrapper';
 export { default as Image } from './atoms/Image';
 export { default as Input } from './atoms/Input';
 export { default as QueryComponent } from './atoms/QueryComponent';
@@ -11,6 +12,9 @@ export { default as QueryComponent } from './atoms/QueryComponent';
 export { default as SearchbarItem } from './moleculs/SearchbarItem';
 export { default as QueryPreItem } from './moleculs/QueryPreItem';
 export { default as QueryPreItemBox } from './moleculs/QueryPreItemBox';
+export { default as SearchResultBox } from './moleculs/SearchResultBox';
+export { default as SearchResultItem } from './moleculs/SearchResultItem';
+export { default as Logo } from './moleculs/Logo';
 
 //ORGANISM
 export { default as Searchbar } from './organism/SearchBar';

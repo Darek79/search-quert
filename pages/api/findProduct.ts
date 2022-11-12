@@ -13,6 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         where: { product_name: { startsWith: q } },
         select: {
             product_name: true,
+            product_description: true,
             manufacturer: true,
             id: true,
             visited: true,
@@ -20,7 +21,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         take: 10,
     });
     product.sort((a, b) => Number(a.visited) - Number(b.visited));
-    // console.log(products, 'here');
     res.status(200).json(product);
 }
 

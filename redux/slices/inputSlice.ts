@@ -1,14 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface InputSclice {
+    value: string;
+}
+
+const initState: InputSclice = {
+    value: '',
+};
+
 const inputSlice = createSlice({
     name: 'inputSlice',
-    initialState: '',
+    initialState: initState,
     reducers: {
         inputValue(state, action: PayloadAction<string>) {
-            return action.payload;
+            state.value = action.payload;
         },
-        resetValue() {
-            return '';
+        resetValue(state) {
+            state.value = '';
         },
     },
 });

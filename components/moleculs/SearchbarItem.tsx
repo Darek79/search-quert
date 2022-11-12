@@ -1,11 +1,13 @@
 import { Input, LupeSVG, ClosingX } from 'components';
 import { useRouter } from 'next/router';
-import { useRef, KeyboardEvent, FormEvent, useEffect, HTMLAttributes, memo } from 'react';
+import { useRef, KeyboardEvent, FormEvent, useEffect, HTMLAttributes, memo, MouseEvent } from 'react';
 import { useAppDispatch, AppDispatch } from 'redux/rootStore';
 import { resetValue } from 'redux/slices/inputSlice';
 import { resetQuery } from 'redux/slices/querySlice';
-import { inputClick } from 'redux/slices/showBox';
+import { inputClickTrue, inputClickFalse } from 'redux/slices/showBox';
+import { querySetter } from 'redux/slices/querySlice';
 import { setItemLocal } from 'utils/utilsFn';
+import { getItemLocal } from 'utils/utilsFn';
 
 // interface InputI {}
 
@@ -16,14 +18,17 @@ export default memo(function SearchbarItem({ ...rest }: HTMLAttributes<HTMLFormE
     const router = useRouter();
 
     function getInput(event: FormEvent<HTMLFormElement>) {
+        event.stopPropagation();
         event.preventDefault();
     }
 
     function getKeyboardEnter(event: KeyboardEvent) {
+        event.stopPropagation();
         if (event.key === 'Enter' && inputRef.current?.value) {
             setItemLocal({
-                id: '',
+                id: String(Date.now()),
                 manufacturer: '',
+                product_description: '',
                 product_name: inputRef.current?.value,
                 visited: true,
             });
@@ -34,16 +39,20 @@ export default memo(function SearchbarItem({ ...rest }: HTMLAttributes<HTMLFormE
         }
     }
 
-    // pathname: '/detail/preview/',
-    //                 query: { q: product_name, brand: manufacturer, id: id },
-
-    function clearInput() {
+    function clearInput(e: MouseEvent) {
+        e.stopPropagation();
         console.log('clear');
         dispatch(resetValue());
         dispatch(resetQuery());
+        dispatch(inputClickFalse());
+        const arr = getItemLocal();
+        if (arr) {
+            dispatch(querySetter(arr));
+        }
     }
-    function showQueries() {
-        // dispatch(inputClick());
+    function showQueries(e: MouseEvent) {
+        e.stopPropagation();
+        dispatch(inputClickTrue());
     }
 
     useEffect(() => {

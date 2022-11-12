@@ -3,7 +3,7 @@ import { useAppDispatch, AppDispatch } from 'redux/rootStore';
 import { inputClickFalse } from 'redux/slices/showBox';
 // interface PageInnerWrapperI {}
 
-export default function PageWrapper({ children, ...rest }: HTMLAttributes<HTMLDivElement>): JSX.Element {
+export default function PageInnerWrapper({ children, ...rest }: HTMLAttributes<HTMLDivElement>): JSX.Element {
     const dispatch: AppDispatch = useAppDispatch();
     function closeModal() {
         console.log('true');
@@ -13,7 +13,7 @@ export default function PageWrapper({ children, ...rest }: HTMLAttributes<HTMLDi
         'div',
         {
             onClick: closeModal,
-            className: 'bg-pageMain min-h-screen p-3 md:px-5 lg:px-0',
+            className: 'bg-inherit max-w-screen-xl m-auto',
             ...rest,
         },
         children

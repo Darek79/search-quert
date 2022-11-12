@@ -13,11 +13,18 @@ const showBox = createSlice({
     name: 'showBox',
     initialState: initState,
     reducers: {
-        inputClick(state) {
-            state.clickedInput = !state.clickedInput;
+        inputClickTrue(state) {
+            if (!state.clickedInput) {
+                state.clickedInput = true;
+            }
+        },
+        inputClickFalse(state) {
+            if (state.clickedInput) {
+                state.clickedInput = false;
+            }
         },
     },
 });
 
-export const { inputClick } = showBox.actions;
+export const { inputClickTrue, inputClickFalse } = showBox.actions;
 export default showBox.reducer;

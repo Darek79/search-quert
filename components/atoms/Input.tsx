@@ -9,7 +9,7 @@ interface InputI extends InputHTMLAttributes<HTMLInputElement> {
 
 export default forwardRef(function Input({ children, inputStyles, ...rest }: InputI, inputRef): JSX.Element {
     // const [state, setState] = useState<string>('');
-    const value = useAppSelector((state: RootState) => state.inputSlice);
+    const value = useAppSelector((state: RootState) => state.inputSlice.value);
     const dispatch: AppDispatch = useAppDispatch();
 
     const stateHandler = useCallback(

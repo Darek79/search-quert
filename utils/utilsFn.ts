@@ -35,8 +35,22 @@ export function setItemLocal(item: PRODUCT) {
     if (index >= 0) {
         return null;
     }
+    // if (parsed.length === 10) {
+    //     parsed.shift();
+    // }
     parsed!.push(item);
     window.localStorage.setItem('searched', JSON.stringify(parsed));
+}
+
+export function deleteLocalItem(item: string) {
+    const parsed = getItemLocal();
+    const arr = parsed!.filter(el => el.id !== item);
+    if (!arr?.length) {
+        window.localStorage.removeItem('searched');
+        return arr;
+    }
+    window.localStorage.setItem('searched', JSON.stringify(arr));
+    return arr;
 }
 
 export function getItemLocal(): PRODUCT[] | null {
