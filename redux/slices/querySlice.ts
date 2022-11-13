@@ -35,7 +35,9 @@ const querySlice = createSlice({
             state.itemToRemove = action.payload;
         },
         removeFromQueryAndDB(state, action: PayloadAction<string>) {
-            state.queryResults = state.queryResults.filter(el => el.id !== action.payload);
+            if (state.queryResults.length) {
+                state.queryResults = state.queryResults.filter(el => el.id !== action.payload);
+            }
         },
         updateLocalQuery(state, action: PayloadAction<string>) {
             state.queryResults = state.queryResults.map(el => {
