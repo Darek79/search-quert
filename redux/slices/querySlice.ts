@@ -40,17 +40,21 @@ const querySlice = createSlice({
             }
         },
         updateLocalQuery(state, action: PayloadAction<string>) {
-            state.queryResults = state.queryResults.map(el => {
-                if (el.id === action.payload) {
-                    el.visited = true;
-                    return el;
-                } else {
-                    return el;
-                }
-            });
+            console.log('here');
+            state.queryResults = state.queryResults
+                .map(el => {
+                    if (el.id === action.payload) {
+                        el.visited = true;
+                        return el;
+                    } else {
+                        return el;
+                    }
+                })
+                .sort((a, b) => Number(a.visited) - Number(b.visited))
+                .reverse();
         },
         transferQueryToDetail(state) {
-            state.detailResults = state.queryResults.slice();
+            state.detailResults = [...state.queryResults];
         },
         fillQueryFromVisited(state, action: PayloadAction<PRODUCT[]>) {
             state.detailResults = [...action.payload];

@@ -78,15 +78,17 @@ export default memo(function QueryPreItem({
                     product_description: product_description,
                     visited: true,
                 });
-                dispatch(updateLocalQuery(id));
+
                 axiosHandlerStatus('updateVisited', id, '1').then(res => {
                     if (res) {
                         dispatch(setLastQuery(product_name.split(' ')[0]));
                         dispatch(setEndQueryTime(Date.now()));
+                        dispatch(updateLocalQuery(id));
                         router.push({
                             pathname: '/detail/preview/',
                             query: { q: product_name, brand: manufacturer, id: id },
                         });
+
                         dispatch(transferQueryToDetail());
                     }
                 });

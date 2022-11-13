@@ -41,8 +41,12 @@ export function setItemLocal(item: PRODUCT) {
 }
 
 export function deleteLocalItem(item: string) {
+    let arr: PRODUCT[] | null = [];
     const parsed = getItemLocal();
-    const arr = parsed!.filter(el => el.id !== item);
+    if (parsed && parsed.length) {
+        arr = parsed!.filter(el => el.id !== item);
+    }
+
     if (!arr?.length) {
         window.localStorage.removeItem('searched');
         return arr;
