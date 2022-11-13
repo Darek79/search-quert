@@ -6,7 +6,6 @@ import { inputClickFalse } from 'redux/slices/showBox';
 export default function PageInnerWrapper({ children, ...rest }: HTMLAttributes<HTMLDivElement>): JSX.Element {
     const dispatch: AppDispatch = useAppDispatch();
     function closeModal() {
-        console.log('true');
         dispatch(inputClickFalse());
     }
     return createElement(

@@ -4,7 +4,7 @@ import { PageWrapper, PageInnerWrapper, Box, Searchbar, QueryComponent, Logo } f
 import Image from 'next/image';
 import logo from 'public/logoipsum1.svg';
 import { useEffect } from 'react';
-import { axiosHanlder } from 'axios_handler/handler';
+import { axiosHandler } from 'axios_handler/handler';
 // import { useEffect } from 'react';
 
 const Home: NextPage = () => {

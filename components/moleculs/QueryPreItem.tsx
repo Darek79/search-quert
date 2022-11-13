@@ -1,18 +1,23 @@
 import { Box, ClockSVG, LupeSVG } from 'components';
-import Link from 'next/link';
 import classname from 'classnames';
 import { useRouter } from 'next/router';
 import type { PRODUCT } from 'Types/product';
 import { HTMLAttributes, useMemo, memo, useCallback, MouseEvent } from 'react';
 import { setItemLocal } from 'utils/utilsFn';
-import { deleteLocalItem } from 'utils/utilsFn';
-import { useAppSelector, RootState, useAppDispatch, AppDispatch } from 'redux/rootStore';
-import { changeVisitedStatus, updateLocalQuery, transferQueryToDetail } from 'redux/slices/querySlice';
-import { inputClickTrue, inputClickFalse } from 'redux/slices/showBox';
-import { resetValue } from 'redux/slices/inputSlice';
-import { axiosHanlderStatus } from 'axios_handler/handler';
+import { useAppDispatch, AppDispatch } from 'redux/rootStore';
+import {
+    changeVisitedStatus,
+    updateLocalQuery,
+    transferQueryToDetail,
+    fillQueryFromVisited,
+    setStartQueryTime,
+    setEndQueryTime,
+    setCountQueryTime,
+    setLastQuery,
+} from 'redux/slices/querySlice';
+import { inputClickFalse } from 'redux/slices/showBox';
+import { axiosHandlerStatus, axiosHandler } from 'axios_handler/handler';
 type QueryPreItems = PRODUCT & HTMLAttributes<HTMLDivElement>;
-
 export default memo(function QueryPreItem({
     product_name,
     manufacturer,
@@ -62,7 +67,10 @@ export default memo(function QueryPreItem({
     const addAsVisited = useCallback(
         (event: MouseEvent) => {
             event.stopPropagation();
+            dispatch(setStartQueryTime(Date.now()));
+            axiosHandler(product_name.split(' ')[0], 'countQueryDocuments').then(d => dispatch(setCountQueryTime(d)));
             if (!visited) {
+                dispatch(setStartQueryTime(Date.now()));
                 setItemLocal({
                     id: id,
                     manufacturer: manufacturer,
@@ -71,8 +79,10 @@ export default memo(function QueryPreItem({
                     visited: true,
                 });
                 dispatch(updateLocalQuery(id));
-                axiosHanlderStatus('updateVisited', id, '1').then(res => {
+                axiosHandlerStatus('updateVisited', id, '1').then(res => {
                     if (res) {
+                        dispatch(setLastQuery(product_name.split(' ')[0]));
+                        dispatch(setEndQueryTime(Date.now()));
                         router.push({
                             pathname: '/detail/preview/',
                             query: { q: product_name, brand: manufacturer, id: id },
@@ -80,14 +90,21 @@ export default memo(function QueryPreItem({
                         dispatch(transferQueryToDetail());
                     }
                 });
-                dispatch(inputClickFalse());
             }
             if (visited) {
-                router.push({
-                    pathname: '/detail/preview/',
-                    query: { q: product_name, brand: manufacturer, id: id },
+                axiosHandler(product_name.split(' ')[0], 'findProduct').then(res => {
+                    if (res) {
+                        dispatch(setEndQueryTime(Date.now()));
+                        dispatch(fillQueryFromVisited(res));
+                        dispatch(setLastQuery(product_name.split(' ')[0]));
+                        router.push({
+                            pathname: '/detail/preview/',
+                            query: { q: product_name, brand: manufacturer, id: id },
+                        });
+                    }
                 });
             }
+            dispatch(inputClickFalse());
         },
         [dispatch, id, manufacturer, product_name, visited, router, product_description]
     );

@@ -15,6 +15,8 @@ export { default as QueryPreItemBox } from './moleculs/QueryPreItemBox';
 export { default as SearchResultBox } from './moleculs/SearchResultBox';
 export { default as SearchResultItem } from './moleculs/SearchResultItem';
 export { default as Logo } from './moleculs/Logo';
+export { default as ShowQueryTime } from './moleculs/ShowQueryTime';
+export { default as LoadMoreDocs } from './moleculs/LoadMoreDocuments';
 
 //ORGANISM
 export { default as Searchbar } from './organism/SearchBar';

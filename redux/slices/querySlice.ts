@@ -5,12 +5,20 @@ interface InitStateI {
     queryResults: PRODUCT[];
     detailResults: PRODUCT[];
     itemToRemove: string;
+    start: number;
+    end: number;
+    count: number;
+    lastQuery: string;
 }
 
 const initState: InitStateI = {
     queryResults: [],
     detailResults: [],
     itemToRemove: '',
+    start: 0,
+    end: 0,
+    count: 0,
+    lastQuery: '',
 };
 
 const querySlice = createSlice({
@@ -18,8 +26,7 @@ const querySlice = createSlice({
     initialState: initState,
     reducers: {
         querySetter(state, action: PayloadAction<PRODUCT[]>) {
-            console.log(action.payload, 'payload');
-            state.queryResults = action.payload.reverse();
+            state.queryResults = [...action.payload.reverse()];
         },
         resetQuery(state) {
             state.queryResults = [];
@@ -41,8 +48,25 @@ const querySlice = createSlice({
             });
         },
         transferQueryToDetail(state) {
-            console.log('here');
             state.detailResults = state.queryResults.slice();
+        },
+        fillQueryFromVisited(state, action: PayloadAction<PRODUCT[]>) {
+            state.detailResults = [...action.payload];
+        },
+        setStartQueryTime(state, action: PayloadAction<number>) {
+            state.start = action.payload;
+        },
+        setEndQueryTime(state, action: PayloadAction<number>) {
+            state.end = action.payload;
+        },
+        setCountQueryTime(state, action: PayloadAction<number>) {
+            state.count = action.payload;
+        },
+        loadMore(state, action: PayloadAction<PRODUCT[]>) {
+            state.detailResults = [...state.detailResults, ...action.payload];
+        },
+        setLastQuery(state, action: PayloadAction<string>) {
+            state.lastQuery = action.payload;
         },
     },
 });
@@ -54,5 +78,11 @@ export const {
     removeFromQueryAndDB,
     updateLocalQuery,
     transferQueryToDetail,
+    fillQueryFromVisited,
+    setStartQueryTime,
+    setCountQueryTime,
+    setEndQueryTime,
+    loadMore,
+    setLastQuery,
 } = querySlice.actions;
 export default querySlice.reducer;

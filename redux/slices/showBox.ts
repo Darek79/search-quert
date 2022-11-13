@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { PRODUCT } from 'Types/product';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface InitStateI {
     clickedInput: boolean;

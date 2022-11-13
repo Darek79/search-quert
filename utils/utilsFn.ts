@@ -26,18 +26,16 @@ export function setItemLocal(item: PRODUCT) {
     const parsed = getItemLocal();
 
     if (!parsed) {
-        console.log('1');
         window.localStorage.setItem('searched', JSON.stringify([item]));
         return null;
     }
     const index = parsed.findIndex(el => el.product_name.toLocaleLowerCase() === item.product_name.toLocaleLowerCase());
-    console.log(index);
     if (index >= 0) {
         return null;
     }
-    // if (parsed.length === 10) {
-    //     parsed.shift();
-    // }
+    if (parsed.length === 10) {
+        parsed.shift();
+    }
     parsed!.push(item);
     window.localStorage.setItem('searched', JSON.stringify(parsed));
 }

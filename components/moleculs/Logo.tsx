@@ -5,10 +5,12 @@ import logo from 'public/logoipsum1.svg';
 
 export default function Logo(): JSX.Element {
     return (
-        <Link href="/">
-            <Box className="relative flex justify-center mb-5 cursor-pointer">
-                <Image src={logo} alt="logo" />
-            </Box>
-        </Link>
+        <Box className="relative flex justify-center mb-5">
+            <Link href="/">
+                <a className="cursor-pointer">
+                    <Image src={logo} alt="logo" />
+                </a>
+            </Link>
+        </Box>
     );
 }

@@ -6,7 +6,6 @@ export default memo(function SearchResultBox({ ...rest }: HTMLAttributes<HTMLDiv
     const detailResults = useAppSelector((state: RootState) => state.querySlice.detailResults);
     return (
         <Box {...rest}>
-            <>{console.log(detailResults, '11111111111')}</>
             {detailResults &&
                 detailResults.map(el => (
                     <SearchResultItem

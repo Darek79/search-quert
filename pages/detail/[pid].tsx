@@ -1,21 +1,18 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { SearchResultBox, Box, Logo, QueryComponent, PageInnerWrapper, PageWrapper, Searchbar } from 'components';
-import { useEffect } from 'react';
-import { useAppDispatch, AppDispatch, useAppSelector, RootState } from 'redux/rootStore';
-import { queryResults } from 'redux/slices/querySlice';
-
-// import { useEffect } from 'react';
-// import { axiosHanlder } from 'axios_handler/handler';
-// import { useEffect } from 'react';
+import {
+    SearchResultBox,
+    Box,
+    Logo,
+    QueryComponent,
+    PageInnerWrapper,
+    PageWrapper,
+    Searchbar,
+    ShowQueryTime,
+    LoadMoreDocs,
+} from 'components';
 
 const Detail: NextPage = () => {
-    const router = useRouter();
-    // const dispatch: AppDispatch = useAppDispatch();
-    const queryResults = useAppSelector((state: RootState) => state.querySlice.queryResults);
-
-    // useEffect(() => {}, [router]);
     return (
         <PageWrapper>
             <PageInnerWrapper>
@@ -28,10 +25,10 @@ const Detail: NextPage = () => {
                 <Box className="py-3">
                     <Logo />
                     <Searchbar />
+                    <ShowQueryTime />
                 </Box>
-                <>{console.log(router)}</>
-                <>{console.log(queryResults)}</>
                 <SearchResultBox className="grid gap-8 px-5" />
+                <LoadMoreDocs />
             </PageInnerWrapper>
         </PageWrapper>
     );

@@ -1,6 +1,6 @@
 import { useAppSelector, RootState, useAppDispatch, AppDispatch } from 'redux/rootStore';
 import { useEffect } from 'react';
-import { axiosHanlder, axiosHanlderStatus } from 'axios_handler/handler';
+import { axiosHandler, axiosHandlerStatus } from 'axios_handler/handler';
 import { querySetter, removeFromQueryAndDB } from 'redux/slices/querySlice';
 import { getItemLocal, deleteLocalItem } from 'utils/utilsFn';
 
@@ -10,7 +10,7 @@ export default function QueryComponent(): JSX.Element {
     const dispatch: AppDispatch = useAppDispatch();
     useEffect(() => {
         if (inputValue) {
-            axiosHanlder(inputValue, 'findProduct').then(d => dispatch(querySetter(d)));
+            axiosHandler(inputValue, 'findProduct').then(d => dispatch(querySetter(d)));
         }
     }, [inputValue, dispatch]);
 
@@ -22,7 +22,7 @@ export default function QueryComponent(): JSX.Element {
             }
             if (itemToRemove.length > 13) {
                 dispatch(removeFromQueryAndDB(itemToRemove));
-                axiosHanlderStatus('updateVisited', itemToRemove, '');
+                axiosHandlerStatus('updateVisited', itemToRemove, '');
             }
         }
     }, [itemToRemove, dispatch]);
@@ -30,7 +30,6 @@ export default function QueryComponent(): JSX.Element {
     useEffect(() => {
         const arr = getItemLocal();
         if (arr) {
-            console.log('item');
             dispatch(querySetter(arr));
         }
     }, [dispatch]);

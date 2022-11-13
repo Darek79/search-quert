@@ -3,11 +3,19 @@ import { useRouter } from 'next/router';
 import { useRef, KeyboardEvent, FormEvent, useEffect, HTMLAttributes, memo, MouseEvent } from 'react';
 import { useAppDispatch, AppDispatch } from 'redux/rootStore';
 import { resetValue } from 'redux/slices/inputSlice';
-import { resetQuery } from 'redux/slices/querySlice';
+import {
+    resetQuery,
+    fillQueryFromVisited,
+    setStartQueryTime,
+    setCountQueryTime,
+    setEndQueryTime,
+    setLastQuery,
+} from 'redux/slices/querySlice';
 import { inputClickTrue, inputClickFalse } from 'redux/slices/showBox';
 import { querySetter } from 'redux/slices/querySlice';
 import { setItemLocal } from 'utils/utilsFn';
 import { getItemLocal } from 'utils/utilsFn';
+import { axiosHandler } from 'axios_handler/handler';
 
 // interface InputI {}
 
@@ -25,6 +33,7 @@ export default memo(function SearchbarItem({ ...rest }: HTMLAttributes<HTMLFormE
     function getKeyboardEnter(event: KeyboardEvent) {
         event.stopPropagation();
         if (event.key === 'Enter' && inputRef.current?.value) {
+            dispatch(setStartQueryTime(Date.now()));
             setItemLocal({
                 id: String(Date.now()),
                 manufacturer: '',
@@ -32,16 +41,22 @@ export default memo(function SearchbarItem({ ...rest }: HTMLAttributes<HTMLFormE
                 product_name: inputRef.current?.value,
                 visited: true,
             });
-            router.push({
-                pathname: '/detail/preview/',
-                query: { q: inputRef.current?.value, brand: '', id: '' },
+            axiosHandler(inputRef.current?.value, 'countQueryDocuments').then(d => dispatch(setCountQueryTime(d)));
+            axiosHandler(inputRef.current?.value, 'findProduct').then(d => {
+                dispatch(setEndQueryTime(Date.now()));
+                dispatch(fillQueryFromVisited(d));
+                dispatch(inputClickFalse());
+                dispatch(setLastQuery(inputRef.current?.value as string));
+                router.push({
+                    pathname: '/detail/preview/',
+                    query: { q: inputRef.current?.value, brand: '', id: '' },
+                });
             });
         }
     }
 
     function clearInput(e: MouseEvent) {
         e.stopPropagation();
-        console.log('clear');
         dispatch(resetValue());
         dispatch(resetQuery());
         dispatch(inputClickFalse());
